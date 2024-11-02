@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>TODO Edit</title>
+</head>
+<body>
+    <h1>TODO Edit</h1>
+    <form action="#" th:action="@{/tasks/edit}" th:object="${task}" method="post">
+        <input type="hidden" th:field="*{id}" />
+        <input type="text" th:field="*{description}" placeholder="${task.description}" />
+        <button type="submit">Complete</button>
+        <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+    </form>
+</body>
+</html>

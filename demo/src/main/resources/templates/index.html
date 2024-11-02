@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>TODO List</title>
+</head>
+<body>
+    <h1>TODO List</h1>
+    <form action="#" th:action="@{/tasks}" th:object="${task}" method="post">
+        <input type="text" th:field="*{description}" placeholder="Task description" />
+        <button type="submit">Add Task</button>
+        <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+    </form>
+    <ul>
+        <li th:each="task : ${tasks}">
+            <span th:text="${task.description}">Task Description</span>
+            <a th:href="@{/tasks/edit/{id}(id=${task.id})}">Edit</a>
+            <form th:action="@{/tasks/delete}" method="post" style="display:inline">
+                <input type="hidden" name="id" th:value="${task.id}" />
+                <button type="submit">Delete</button>
+            </form>
+        </li>
+    </ul>
+    <!--
+    <form action="/add" method="post">
+        <input type="text" name="task" placeholder="Add new task" required>
+        <button type="submit">Add</button>
+    </form>
+      <ul>
+          <li th:each="todo : ${todos}">
+              <span th:text="${todo.task}"></span>
+              <a th:href="@{'/delete/' + ${todo.id}}">Delete</a>
+          </li>
+      </ul>
+    -->
+</body>
+</html>
+

@@ -1,0 +1,132 @@
+plugins {
+    id 'org.springframework.boot' version '3.2.6'
+    id 'io.spring.dependency-management' version '1.1.5'
+    id 'java'
+    id 'org.flywaydb.flyway' version '10.14.0'
+    id 'jacoco'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    sourceCompatibility = '17'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.flywaydb:flyway-core'
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    runtimeOnly 'com.h2database:h2:2.2.220'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+}
+
+flyway {
+    url = 'jdbc:h2:mem:testdb'
+    user = 'sa'
+    password = ''
+    locations = ['classpath:db/migration']
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+
+/*apply plugin: 'java'
+apply plugin: 'flyway'
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.hsqldb:hsqldb:2.3.2"
+        classpath "org.flywaydb:flyway-gradle-plugin:3.0"
+    }
+}
+
+flyway {
+    url = 'jdbc:h2:mem:testdb'
+    user = 'sa'
+    password = ''
+    locations = ['classpath:db/migration']
+}
+
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.2.6'
+	id 'io.spring.dependency-management' version '1.1.5'
+	id "org.flywaydb.flyway" version "10.14.0"
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	sourceCompatibility = '17'
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.flywaydb:flyway-core'
+	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
+	compileOnly 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	runtimeOnly 'com.h2database:h2:2.2.220'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}*/
+
+test {
+    useJUnitPlatform()
+    finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+    dependsOn test
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                minimum = 0.8
+            }
+        }
+    }
+}

@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Error Page</title>
+</head>
+<body>
+    <h1>Server Error</h1>
+    <div th:if="${errorMessage}" style="color: red;">
+        <p th:text="${errorMessage}"></p>
+    </div>
+</body>
+</html>
